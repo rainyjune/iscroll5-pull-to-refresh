@@ -5,10 +5,7 @@ var myScroll,
   
 // MY 
 var scrolling = false;
-var scrollStartPosition = {
-  x: 0,
-  y: 0
-};
+var scrollStartY = 0;
 // Parameter 
 var scrollYOffset = 10;
 
@@ -66,8 +63,7 @@ function loaded() {
   
   myScroll.on('scrollStart', function(){
     scrolling = true;
-    scrollStartPosition.x = this.x;
-    scrollStartPosition.y = this.y;
+    scrollStartY = this.y;
   });
   
   myScroll.on('scroll', scrollingHandler);
@@ -75,11 +71,10 @@ function loaded() {
   // TODO Button is Visible?
   myScroll.on('scrollEnd', function() {
     scrolling = false;
-    var nowY = this.y,
-        startY = scrollStartPosition.y;
+    var nowY = this.y;
     // Make sure the scroll is expected.
-    if (Math.abs(nowY - startY) > scrollYOffset) {
-      if (nowY > startY) {
+    if (Math.abs(nowY - scrollStartY) > scrollYOffset) {
+      if (nowY > scrollStartY) {
         // Pull Down
       } else {
         // Pull Up
