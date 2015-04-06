@@ -141,3 +141,8 @@ body {
 	from { -webkit-transform:rotate(0deg) translateZ(0); }
 	to { -webkit-transform:rotate(360deg) translateZ(0); }
 }
+
+/* Custom */
+#wrapper {
+  overflow: hidden;
+}
