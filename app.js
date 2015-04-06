@@ -61,16 +61,7 @@ function loaded() {
     mouseWheel: true,
     scrollbars: false,
     fadeScrollbars: false, // Leave this to false to spare resources.
-    tap: true, // This is the suggested way to handle user interaction with clickable elements.
-		onRefresh: function () {
-			
-		},
-		onScrollMove: function () {
-			
-		},
-		onScrollEnd: function () {
-			
-		}
+    tap: true // This is the suggested way to handle user interaction with clickable elements.
 	});
   
   myScroll.on('scrollStart', function(){
