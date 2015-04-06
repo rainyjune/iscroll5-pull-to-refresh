@@ -118,12 +118,14 @@ function loaded() {
 }
 
   function resetIndicator() {
-    if (pullDownEl.className.match('loading')) {
-      pullDownEl.className = '';
-      pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
-    } else if (pullUpEl.className.match('loading')) {
-      pullUpEl.className = '';
-      pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
+    var element = document.querySelector('.loading');
+    if (element) {
+      var label = element.querySelector('.label');
+      if (label) {
+        var labelDefaultText = label.getAttribute('data-defaultText');
+        element.className = '';
+        label.innerHTML = labelDefaultText;
+      }
     }
   }
 
