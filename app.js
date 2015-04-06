@@ -22,8 +22,7 @@ function pullDownAction () {
 		}
 		
 		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-    ////
-    refreshHandler();
+    resetIndicator();
 	}, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
 }
 
@@ -39,8 +38,7 @@ function pullUpAction () {
 		}
 		
 		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-    ////
-    refreshHandler();
+    resetIndicator();
 	}, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
 }
 
@@ -66,7 +64,7 @@ function loaded() {
     scrollStartY = this.y;
   });
   
-  myScroll.on('scroll', scrollingHandler);
+  myScroll.on('scroll', onScroll);
   
   // TODO Button is Visible?
   myScroll.on('scrollEnd', function() {
@@ -79,7 +77,6 @@ function loaded() {
       } else {
         // Pull Up
       }
-      //refreshHandler();
       scrollEndUpdateButtonsHandler();
     }
     
@@ -97,7 +94,7 @@ function loaded() {
     }
   }
   
-  function scrollingHandler() {
+  function onScroll() {
     if (this.y > 5 && !pullDownEl.className.match('flip')) {
       pullDownEl.className = 'flip';
       pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Release to refresh...';
@@ -120,7 +117,7 @@ function loaded() {
 	setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
 }
 
-  function refreshHandler() {
+  function resetIndicator() {
     if (pullDownEl.className.match('loading')) {
       pullDownEl.className = '';
       pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
