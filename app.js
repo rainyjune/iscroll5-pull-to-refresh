@@ -81,10 +81,8 @@ function loaded() {
     if (Math.abs(nowY - startY) > scrollYOffset) {
       if (nowY > startY) {
         // Pull Down
-        pullDownAction();
       } else {
         // Pull Up
-        pullUpAction();
       }
       //refreshHandler();
       scrollEndUpdateButtonsHandler();
