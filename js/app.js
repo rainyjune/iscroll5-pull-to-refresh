@@ -1,6 +1,8 @@
 var myScroll,
     maxScrollY;// local variable
 
+var generatedCount = 0;
+
 var pullDownEl, pullDownLabel, pullDownElHeight,
     pullUpEl, pullUpLabel, pullUpElHeight;
 
@@ -47,6 +49,7 @@ function onScrollEnd() {
   }
   if (flipEl) {
     setLoadingStatus(flipEl);
+    requestNewData(); // Ajax request;
   }
 }
 
@@ -82,6 +85,27 @@ function restorePullUpButton() {
   myScroll.maxScrollY = maxScrollY; 
 }
 
+function restorePullButton() {
+  restorePullUpButton();
+}
+
 function logPosition() {
   console.log("Position:", parseInt(myScroll.y));
+}
+
+function requestNewData() {
+  setTimeout(function () {  // <-- Simulate network congestion, remove setTimeout from production!
+    var el, li, i;
+    el = document.getElementById('thelist');
+
+    for (i=0; i<3; i++) {
+    li = document.createElement('li');
+    li.innerText = 'Generated row ' + (++generatedCount);
+    el.appendChild(li, el.childNodes[0]);
+    }
+
+    myScroll.refresh();   // Remember to refresh when contents are loaded (ie: on ajax completion)
+    maxScrollY = myScroll.maxScrollY; 
+    restorePullButton();
+  }, 1000); // <-- Simulate network congestion, remove setTimeout from production!    
 }
