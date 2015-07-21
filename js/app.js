@@ -31,7 +31,7 @@ function onScrollMove() {
     pullDownAction();
   } else if (pullDownEl && pullDownElHeight && y < pullDownElHeight && pullDownEl.className.match("flip")) {
     restorePullDownButton();
-  } else if (pullUpEl && pullUpElHeight && (y <= maxScrollY - pullUpElHeight) && !pullUpEl.className.match("flip")) {
+  } else if (pullUpEl && pullUpElHeight && (y <= maxScrollY - pullUpElHeight) && !pullUpEl.className.match("flip") && !pullUpEl.className.match("loading")) {
     pullUpAction();
   } else if (pullUpEl && pullUpElHeight && (y > maxScrollY - pullUpElHeight) && pullUpEl.className.match("flip")) {
     restorePullUpButton();
