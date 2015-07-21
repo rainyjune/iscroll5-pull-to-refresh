@@ -40,9 +40,6 @@
     function onScrollMove() {
       logPosition();
       var y = this.y;
-      console.log("y:", y);
-      console.log("this.maxScrollY:", this.maxScrollY);
-      console.log("pullUpHeight:", pullUpElHeight);
       if (pullUpEl && pullUpElHeight && (y <= self.maxScrollY - pullUpElHeight) && !pullUpEl.className.match("flip") && !pullUpEl.className.match("loading")) {
         onPullUpAction();
       } else if (pullUpEl && pullUpElHeight && (y > self.maxScrollY - pullUpElHeight) && pullUpEl.className.match("flip")) {
