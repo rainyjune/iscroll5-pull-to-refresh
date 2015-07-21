@@ -23,7 +23,7 @@
   }
 
   MyScroll.prototype.bindEvents = function() {
-    document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+    document.addEventListener('touchmove', preventDefault, false);
     this.instance.on("scroll", onScrollMove);
     this.instance.on("scrollEnd", onScrollEnd);
 
@@ -89,12 +89,24 @@
   }
 
   MyScroll.prototype.destroy = function() {
-
+    this.maxScrollY = null;
+    this.options = null;
+    this.pullUpEl = null;
+    this.pullUpElHeight = null;
+    this.pullUpLabel = null;
+    document.removeEventListener('touchmove', preventDefault, false);
+    // Destroy the instance
+    this.instance.destroy();
+    this.isntance = null;
   };
 
   MyScroll.prototype.disablePull = function() {
 
   };
+
+  function preventDefault(e) {
+    e.preventDefault(); 
+  }
 
   window.MyScroll = MyScroll;
 }(IScroll));
