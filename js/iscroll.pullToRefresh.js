@@ -103,7 +103,6 @@
     this.instance.destroy();
     this.isntance = null;
   };
-//TODO
 
   MyScroll.prototype.disablePull = function() {
     if (this.pullUpEl) {
@@ -114,6 +113,17 @@
       var handler = handlers[i];
       this.instance.off(handler[0], handler[1]);
     }
+    this.eventListeners.length = 0;
+  };
+
+  MyScroll.prototype.enablePull = function() {
+    if (this.eventListeners.length > 0) {
+      return ;
+    }
+    if (this.pullUpEl) {
+      this.pullUpEl.style.display = "block";
+    }
+    this.bindEvents();
   };
 
   function preventDefault(e) {
