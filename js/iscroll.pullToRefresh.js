@@ -97,6 +97,7 @@
     this.pullUpEl = null;
     this.pullUpElHeight = null;
     this.pullUpLabel = null;
+    this.disablePull();
     this.eventListeners = null;
     document.removeEventListener('touchmove', preventDefault, false);
     // Destroy the instance
