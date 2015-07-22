@@ -6,6 +6,12 @@ function loaded () {
     pullUpEl: "#pullUp",
     pullUpAction: requestNewData 
   });
+  document.querySelector("#enable").addEventListener("click", function() {
+    scrollObj.enablePull();
+  }, false);
+  document.querySelector("#disable").addEventListener("click", function() {
+    scrollObj.disablePull();
+  }, false);
 }
 
 function requestNewData() {
