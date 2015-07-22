@@ -19,6 +19,7 @@
         this.pullUpLabel = this.pullUpEl.querySelector(".pullUpLabel");
       }
     }
+    this.eventListeners = [];
     this.bindEvents();
   }
 
@@ -26,6 +27,8 @@
     document.addEventListener('touchmove', preventDefault, false);
     this.instance.on("scroll", onScrollMove);
     this.instance.on("scrollEnd", onScrollEnd);
+    this.eventListeners.push(["scroll", onScrollMove]);
+    this.eventListeners.push(["scrollEnd", onScrollEnd]);
 
     var self = this;
     var pullUpEl = this.pullUpEl,
@@ -94,14 +97,23 @@
     this.pullUpEl = null;
     this.pullUpElHeight = null;
     this.pullUpLabel = null;
+    this.eventListeners = null;
     document.removeEventListener('touchmove', preventDefault, false);
     // Destroy the instance
     this.instance.destroy();
     this.isntance = null;
   };
+//TODO
 
   MyScroll.prototype.disablePull = function() {
-
+    if (this.pullUpEl) {
+      this.pullUpEl.style.display = "none";
+    }
+    var handlers = this.eventListeners;
+    for (var i = 0; i < handlers.length; i++) {
+      var handler = handlers[i];
+      this.instance.off(handler[0], handler[1]);
+    }
   };
 
   function preventDefault(e) {
