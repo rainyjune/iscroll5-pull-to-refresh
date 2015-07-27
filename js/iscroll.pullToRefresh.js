@@ -1,4 +1,13 @@
-(function(IScroll) {
+(function(factory) {
+  if (typeof define !== "undefined" && define.cmd) {
+    define(function(require, exports, module){
+    var IScroll = require('./iscroll-probe.js');// We assume this file and iscroll-probe.js are in the same directory.
+    return factory(IScroll);
+    });
+  } else {
+    factory(IScroll);
+  }  
+}(function(IScroll) {
   "use strict";
 
   function MyScroll(wrapper, options) {
@@ -131,5 +140,10 @@
     e.preventDefault(); 
   }
 
-  window.MyScroll = MyScroll;
-}(IScroll));
+  if (typeof define === "function" && define.cmd) {
+      return MyScroll;
+  } else {
+    window.MyScroll = MyScroll;
+  }
+
+}));
