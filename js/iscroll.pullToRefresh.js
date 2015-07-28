@@ -20,6 +20,7 @@
     this.options = options;
     this.instance = new IScroll(wrapper, options);
     this.maxScrollY = this.instance.maxScrollY; // local variable
+    this.orientationchangeBind = this.orientationchange.bind(this);
 
     if (options.pullUpEl) {
       this.pullUpEl = this.instance.wrapper.querySelector(options.pullUpEl);
@@ -34,6 +35,7 @@
 
   MyScroll.prototype.bindEvents = function() {
     document.addEventListener('touchmove', preventDefault, false);
+    window.addEventListener("orientationchange", this.orientationchangeBind, false);
     this.instance.on("scroll", onScrollMove);
     this.instance.on("scrollEnd", onScrollEnd);
     this.eventListeners.push(["scroll", onScrollMove]);
@@ -87,6 +89,13 @@
 
   };
 
+  MyScroll.prototype.orientationchange = function() {
+    var self = this;
+    setTimeout(function(){
+      self.maxScrollY = self.instance.maxScrollY;
+    }, 500);
+  };
+
   // Remember to refresh when contents are loaded (ie: on ajax completion)
   MyScroll.prototype.refresh = function() {
     this.instance.refresh();   
@@ -109,6 +118,8 @@
     this.disablePull();
     this.eventListeners = null;
     document.removeEventListener('touchmove', preventDefault, false);
+    window.removeEventListener("orientationchange", this.orientationchangeBind, false);
+    this.orientationchangeBind = null;
     // Destroy the instance
     this.instance.destroy();
     this.isntance = null;
@@ -138,6 +149,34 @@
 
   function preventDefault(e) {
     e.preventDefault(); 
+  }
+
+  // Polyfill for Function.prototype.bind
+  // This feature is not supported natively on some platforms, such as Android 2.3.5
+  // from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+  if (!Function.prototype.bind) {
+    Function.prototype.bind = function(oThis) {
+      if (typeof this !== 'function') {
+        // closest thing possible to the ECMAScript 5
+        // internal IsCallable function
+        throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+      }
+
+      var aArgs   = Array.prototype.slice.call(arguments, 1),
+          fToBind = this,
+          fNOP    = function() {},
+          fBound  = function() {
+            return fToBind.apply(this instanceof fNOP
+                ? this
+                : oThis,
+                aArgs.concat(Array.prototype.slice.call(arguments)));
+          };
+
+      fNOP.prototype = this.prototype;
+      fBound.prototype = new fNOP();
+
+      return fBound;
+    };
   }
 
   if (typeof define === "function" && define.cmd) {
